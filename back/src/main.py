@@ -41,12 +41,10 @@ async def get_calced_words(Words: Words):
     else:
         ans = []
        
-    data_all = []
+    data = []
     for m in ans:
-        data = {
-            'word': m[0]
-        }
-        data_all.append(data)
+        data.append(m[0])
+    data_all = { 'words': data}
     data_json = json.dumps(data_all)
     print(data_json)
     print(type(data_json))
