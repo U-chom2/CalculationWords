@@ -13,7 +13,7 @@ services:
         ports:
             - 8000:8000
         networks:
-            - nginx_w2v_network
+            - nginx_network
 
     front:
         container_name: front
@@ -43,7 +43,7 @@ services:
             # volumeマウント： "ホストOSのパス:コンテナにおけるパス"
             - ./nginx/conf.d:/etc/nginx/conf.d
         networks:
-            - nginx_w2v_network
+            - nginx_network
 
 networks:
     nginx_network:

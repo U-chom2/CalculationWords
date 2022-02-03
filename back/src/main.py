@@ -4,14 +4,13 @@ from typing import List  # ネストされたBodyを定義するために必要
 from starlette.requests import Request
 import os
 import sys
-import psycopg2
 from models.base_models import *
 from fastapi.middleware.cors import CORSMiddleware
 import json
 from gensim.models import word2vec
 
 app = FastAPI(version='0.8 beta')
-model = word2vec.Word2Vec.load("wikipedia_for_w2v.model")
+model = word2vec.Word2Vec.load("./wikipedia_for_w2v.model")
 
 origins = [
     "http://localhost",
@@ -32,13 +31,15 @@ async def read_root():
 
 @app.post("/calc_words")
 async def get_calced_words(Words: Words):
-    word1 = Words.word1
-    word2 = Words.word2
-    operation = Words.operation.replace("word2=","")
+    word1 = Words.word1.replace("word1=","").split(",")
+    word2 = Words.word2.replace("word2=","").split(",")
+    operation = Words.operation.replace("operation=","")
     if operation == '+':
         ans = model.wv.most_similar(positive=(word1 + word2),topn=10)
     elif operation == '-':
         ans = model.wv.most_similar(positive=word1,negative=word2,topn=10)
+    else:
+        ans = []
        
     data_all = []
     for m in ans:
