@@ -1,0 +1,50 @@
+version: '3.9'
+
+services: 
+    back:
+        container_name: back
+        build: 
+            context: ./back
+            dockerfile: Dockerfile
+        volumes:
+            - ./back/src:/var/www/html
+        command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+        restart: always
+        ports:
+            - 8000:8000
+        networks:
+            - nginx_w2v_network
+
+    front:
+        container_name: front
+        build:
+            context: ./front
+            dockerfile: Dockerfile
+        tty: true
+        environment:
+            - NODE_ENV=production
+        volumes:
+            - ./front/:/usr/src/app
+        command: sh -c "yarn install && yarn start"
+        ports:
+            - "3000:3000"
+        depends_on:
+            - back
+
+    nginx:
+        container_name: nginx_w2v
+        image: nginx:alpine
+        depends_on: 
+            - back
+        ports:
+            # ポートマッピング： "ホストOSのポート:コンテナ(Nginx)のポート"
+            - "80:80"
+        volumes:
+            # volumeマウント： "ホストOSのパス:コンテナにおけるパス"
+            - ./nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - nginx_w2v_network
+
+networks:
+    nginx_network:
+        driver: bridge
