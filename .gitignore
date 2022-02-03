@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+wikipedia_for_w2v.model
+wikipedia_for_w2v.model.syn1neg.npy
+wikipedia_for_w2v.model.wv.vectors.npy
