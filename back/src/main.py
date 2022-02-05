@@ -39,7 +39,7 @@ async def get_calced_words(Words: Words):
     elif operation == '-':
         ans = model.wv.most_similar(positive=word1,negative=word2,topn=10)
     else:
-        ans = []
+        ans = model.wv.most_similar(positive=word1,topn=10)
        
     data = []
     for m in ans:

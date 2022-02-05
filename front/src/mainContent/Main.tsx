@@ -1,6 +1,7 @@
-import { Button, createStyles, FormControl, InputLabel, makeStyles, Select, TextField, Theme } from '@material-ui/core';
+import { Button, createStyles, FormControl, InputLabel, makeStyles, Modal, Select, TextField, Theme } from '@material-ui/core';
 import React, { useState } from 'react';
 import CallWords from './CallWords';
+import SimpleModal from './modal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,6 +23,7 @@ const Main = () => {
     const [word1, setWord1] = useState('');
     const [word2, setWord2] = useState('');
     const [operation, setOperation] = useState('');
+    const [open, setOpen] = useState(false);
 
     const handleChangeWord1 = (event: React.ChangeEvent<HTMLInputElement>) => {
         setWord1(event.target.value);
@@ -34,7 +36,16 @@ const Main = () => {
     };
     const handleChangeWords = async () => {
         const words = CallWords({word1:word1, word2:word2, operation:operation});
-        alert((await words).words);
+        return (await words).words;
+    };
+    
+    const handleOpen = () => {
+        // handleChangeWords();
+        setOpen(true);
+    };
+  
+    const handleClose = () => {
+        setOpen(false);
     };
 
     return (
@@ -63,6 +74,7 @@ const Main = () => {
                         <option aria-label="None" value="" />
                         <option value={'+'}>+</option>
                         <option value={'-'}>-</option>
+                        <option value={''}>-</option>
                     </Select>
                 </FormControl>
                 <form noValidate autoComplete="off">
@@ -74,9 +86,17 @@ const Main = () => {
                     />
                 </form>
             </div>
-            <Button onClick={() => handleChangeWords() } variant="contained" color="primary">
+            <Button onClick={() => handleOpen() } variant="contained" color="primary">
                 検索
             </Button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                >
+                {SimpleModal()}
+            </Modal>
         </div>
     )
 }
