@@ -22,6 +22,7 @@ const Main = () => {
     const classes = useStyles();
     const [word1, setWord1] = useState('');
     const [word2, setWord2] = useState('');
+    const [words, setWords] = useState(['']);
     const [operation, setOperation] = useState('');
     const [open, setOpen] = useState(false);
 
@@ -34,13 +35,9 @@ const Main = () => {
     const handleChangeOperation = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         setOperation(event.target.value as string);
     };
-    const handleChangeWords = async () => {
+    const handleOpen = async () => {
         const words = CallWords({word1:word1, word2:word2, operation:operation});
-        return (await words).words;
-    };
-    
-    const handleOpen = () => {
-        // handleChangeWords();
+        setWords((await words).words);
         setOpen(true);
     };
   
@@ -95,7 +92,7 @@ const Main = () => {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 >
-                {SimpleModal()}
+                {SimpleModal(words)}
             </Modal>
         </div>
     )
