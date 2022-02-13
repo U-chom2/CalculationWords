@@ -25,16 +25,20 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const SimpleModal = (words: string[]) => {
+const SimpleModal = (words: string[],images: string) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  
+  const illusts:string[] = images.split("!@#$", 20);
+
   return (
     <div style={modalStyle} className={classes.paper}>
       <p id="simple-modal-description">
         {words.map( c =>
             <li>{c}</li>
+        )}
+        {illusts.map( d =>
+            <img src={d} style={{maxHeight: "200px"}}/>
         )}
       </p>
     </div>

@@ -4,12 +4,14 @@ type callProps = {
     operation: string
 }
 type wordType = {
-    words: []
+    words: [],
+    illusts: string
 }
 
 const CallWords = async (props:callProps) => {
     const perseData:wordType = {
-        words: []
+        words: [],
+        illusts: ''
     }
     await fetch('http://localhost:8000/calc_words',{
         method: 'POST',
@@ -27,6 +29,7 @@ const CallWords = async (props:callProps) => {
     }).then((data) => {
         const out = JSON.parse(data);
         perseData.words = out.words;
+        perseData.illusts = out.illusts;
     });
 
     return perseData;

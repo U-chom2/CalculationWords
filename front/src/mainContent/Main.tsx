@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Main = () => {
     const classes = useStyles();
+    const [images, setImages] =useState('');
     const [word1, setWord1] = useState('');
     const [word2, setWord2] = useState('');
     const [words, setWords] = useState(['']);
@@ -36,8 +37,9 @@ const Main = () => {
         setOperation(event.target.value as string);
     };
     const handleOpen = async () => {
-        const words = CallWords({word1:word1, word2:word2, operation:operation});
-        setWords((await words).words);
+        const wordsAndImages = CallWords({word1:word1, word2:word2, operation:operation});
+        setWords((await wordsAndImages).words);
+        setImages((await wordsAndImages).illusts);
         setOpen(true);
     };
   
@@ -71,7 +73,7 @@ const Main = () => {
                         <option aria-label="None" value="" />
                         <option value={'+'}>+</option>
                         <option value={'-'}>-</option>
-                        <option value={''}>-</option>
+                        <option value={' '}> </option>
                     </Select>
                 </FormControl>
                 <form noValidate autoComplete="off">
@@ -92,7 +94,7 @@ const Main = () => {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 >
-                {SimpleModal(words)}
+                {SimpleModal(words,images)}
             </Modal>
         </div>
     )
