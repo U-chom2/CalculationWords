@@ -1,3 +1,4 @@
+import base64
 import requests
 import random
 import bs4
@@ -23,9 +24,8 @@ def image(data):
 def download_img(url):
     r = requests.get(url, stream=True)
     if r.status_code == 200:
-        r.raw.decode_content == True
-        print(r.raw.data)
-        return r.raw.data
+        rawData = base64.b64encode(r.raw.data)
+        return rawData
     return
     
 def out(data):

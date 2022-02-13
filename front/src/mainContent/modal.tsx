@@ -1,4 +1,5 @@
 import React from 'react';
+import { Buffer } from 'buffer'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const getModalStyle = () => {
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const showImages = (data:string) => {
+  const byte = data.replace("b'","").replace("'","");
+  const out = "data:image/png;base64," + byte;
+  return (<img src={out} style={{maxHeight: "200px"}}/>)
+}
+
 const SimpleModal = (words: string[],images: string) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -38,7 +45,7 @@ const SimpleModal = (words: string[],images: string) => {
             <li>{c}</li>
         )}
         {illusts.map( d =>
-            <img src={d} style={{maxHeight: "200px"}}/>
+            showImages(d)
         )}
       </p>
     </div>

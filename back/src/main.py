@@ -48,12 +48,12 @@ async def get_calced_words(Words: Words):
         data.append(m[0])
 
     illust_list = []
-    if len(word1) != 0:
-        for m in word1:
-            illust_list.append(out(m))
-    if len(word2) != 0:
-        for m in word2:
-            illust_list.append(out(m))
+    # if len(word1) != 0:
+    #     for m in word1:
+    #         illust_list.append(out(m))
+    # if len(word2) != 0:
+    #     for m in word2:
+    #         illust_list.append(out(m))
     if len(ans) != 0:
         for m in ans:
             print(m[0])
