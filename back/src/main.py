@@ -47,20 +47,27 @@ async def get_calced_words(Words: Words):
     for m in ans:
         data.append(m[0])
 
-    illust_list = []
-    # if len(word1) != 0:
-    #     for m in word1:
-    #         illust_list.append(out(m))
-    # if len(word2) != 0:
-    #     for m in word2:
-    #         illust_list.append(out(m))
+    illust1 = []
+    # Word1のイラスト
+    if len(word1) != 0:
+        for m in word1:
+            illust1.append(out(m))
+    illust_1 = '!@#$'.join(map(str,illust1))
+    illust2 = []
+    # Word2のイラスト
+    if len(word2) != 0:
+        for m in word2:
+            illust2.append(out(m))
+    illust_2 = '!@#$'.join(map(str,illust2))
+    illust_res = []
+    # 結果のイラスト
     if len(ans) != 0:
         for m in ans:
             print(m[0])
-            illust_list.append(out(m[0]))
-    illust_str = '!@#$'.join(map(str,illust_list))
+            illust_res.append(out(m[0]))
+    illust_3 = '!@#$'.join(map(str,illust_res))
 
-    data_all = { 'words': data, 'illusts': illust_str}
+    data_all = { 'words': data, 'illust1': illust_1, 'illust2': illust_2, 'illust3': illust_3,}
 
     # print(data_all)
     data_json = json.dumps(data_all)

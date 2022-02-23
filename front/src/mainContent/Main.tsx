@@ -20,7 +20,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Main = () => {
     const classes = useStyles();
-    const [images, setImages] =useState('');
+    const [image1, setImages1] =useState('');
+    const [image2, setImages2] =useState('');
+    const [image3, setImages3] =useState('');
     const [word1, setWord1] = useState('');
     const [word2, setWord2] = useState('');
     const [words, setWords] = useState(['']);
@@ -39,7 +41,9 @@ const Main = () => {
     const handleOpen = async () => {
         const wordsAndImages = CallWords({word1:word1, word2:word2, operation:operation});
         setWords((await wordsAndImages).words);
-        setImages((await wordsAndImages).illusts);
+        setImages1((await wordsAndImages).illust1);
+        setImages2((await wordsAndImages).illust2);
+        setImages3((await wordsAndImages).illust3);
         setOpen(true);
     };
   
@@ -94,7 +98,7 @@ const Main = () => {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 >
-                {SimpleModal(words,images)}
+                {SimpleModal(word1,word2,words,operation,image1,image2,image3)}
             </Modal>
         </div>
     )
