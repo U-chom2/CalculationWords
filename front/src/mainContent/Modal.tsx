@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles, Theme, createStyles, styled } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
 
-
 const getModalStyle = () => {
   const top = 50;
   const left = 50;
@@ -26,7 +25,17 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-const wordOrg = (modalStyle:any,classes:any,word1:string,word2:string,words:string[],operation:string,illust1:string[],illust2:string,illust3:string) => {
+
+const wordOrg = (
+  modalStyle:any,
+  classes:any,
+  word1:string,
+  word2:string,
+  words:string[],
+  operation:string,
+  illust1:string,
+  illust2:string,
+  illust3:string) => {
   return (
     <div style={modalStyle} className={classes.paper}>
       {/* 12になるように */}
@@ -49,19 +58,29 @@ const wordOrg = (modalStyle:any,classes:any,word1:string,word2:string,words:stri
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={9} md={4}>
-          <Item>{showImages(illust1[0])}</Item>
+          <Item>{showImages(illust1)}</Item>
         </Grid>
         <Grid item xs={9} md={4}>
-          <Item>{showImages(illust2[0])}</Item>
+          <Item>{showImages(illust2)}</Item>
         </Grid>
         <Grid item xs={9} md={4}>
-          <Item>{showImages(illust3[0])}</Item>
+          <Item>{showImages(illust3)}</Item>
         </Grid>
       </Grid>
     </div>
   )
 }
-const word1Length2 = (modalStyle:any,classes:any,word1:string,word2:string,words:string[],operation:string,illust1:string,illust2:string,illust3:string) => {
+
+const word1Length2 = (
+  modalStyle:any,
+  classes:any,
+  word1:string,
+  word2:string,
+  words:string[],
+  operation:string,
+  illust1:string[],
+  illust2:string,
+  illust3:string) => {
   return (
     <div style={modalStyle} className={classes.paper}>
       {/* 12になるように */}
@@ -93,19 +112,28 @@ const word1Length2 = (modalStyle:any,classes:any,word1:string,word2:string,words
           <Item>{showImages(illust1[0])}</Item>
         </Grid>
         <Grid item xs={9} md={3}>
-          <Item>{showImages(illust2[0])}</Item>
+          <Item>{showImages(illust2)}</Item>
         </Grid>
         <Grid item xs={9} md={3}>
           <Item>{showImages(illust1[1])}</Item>
         </Grid>
         <Grid item xs={9} md={3}>
-          <Item>{showImages(illust3[0])}</Item>
+          <Item>{showImages(illust3)}</Item>
         </Grid>
       </Grid>
     </div>
   )
 }
-const word2Length2 = (modalStyle:any,classes:any,word1:string[],word2:string[],words:string[],operation:string,illust1:string,illust2:string,illust3:string) => {
+const word2Length2 = (
+  modalStyle:any,
+  classes:any,
+  word1:string,
+  word2:string,
+  words:string[],
+  operation:string,
+  illust1:string,
+  illust2:string[],
+  illust3:string) => {
   return (
     <div style={modalStyle} className={classes.paper}>
       {/* 12になるように */}
@@ -134,7 +162,7 @@ const word2Length2 = (modalStyle:any,classes:any,word1:string[],word2:string[],w
       </Grid>
       <Grid container spacing={3}>
         <Grid item xs={9} md={3}>
-          <Item>{showImages(illust1[0])}</Item>
+          <Item>{showImages(illust1)}</Item>
         </Grid>
         <Grid item xs={9} md={3}>
           <Item>{showImages(illust2[0])}</Item>
@@ -143,7 +171,7 @@ const word2Length2 = (modalStyle:any,classes:any,word1:string[],word2:string[],w
           <Item>{showImages(illust2[1])}</Item>
         </Grid>
         <Grid item xs={9} md={3}>
-          <Item>{showImages(illust3[0])}</Item>
+          <Item>{showImages(illust3)}</Item>
         </Grid>
       </Grid>
     </div>

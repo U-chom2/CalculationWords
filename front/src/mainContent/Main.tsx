@@ -1,7 +1,7 @@
 import { Button, createStyles, FormControl, InputLabel, makeStyles, Modal, Select, TextField, Theme } from '@material-ui/core';
 import React, { useState } from 'react';
 import CallWords from './CallWords';
-import SimpleModal from './modal';
+import SimpleModal from './Modal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,11 +46,27 @@ const Main = () => {
         setImages3((await wordsAndImages).illust3);
         setOpen(true);
     };
-  
     const handleClose = () => {
         setOpen(false);
     };
-
+    const handleModal = () => {
+        if (open){
+            return (
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    >
+                    {SimpleModal(word1,word2,words,operation,image1,image2,image3)}
+                </Modal>
+            )
+        }else{
+            return(
+                <></>
+            )
+        }
+    }
     return (
         <div>
             <div className={classes.main}>
@@ -74,10 +90,9 @@ const Main = () => {
                             id: 'Operation',
                         }}
                     >
-                        <option aria-label="None" value="" />
+                        <option aria-label="None" value=" "/>
                         <option value={'+'}>+</option>
                         <option value={'-'}>-</option>
-                        <option value={' '}> </option>
                     </Select>
                 </FormControl>
                 <form noValidate autoComplete="off">
@@ -90,16 +105,17 @@ const Main = () => {
                 </form>
             </div>
             <Button onClick={() => handleOpen() } variant="contained" color="primary">
-                検索
+                計算
             </Button>
-            <Modal
+            { handleModal() }
+            {/* <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
                 >
                 {SimpleModal(word1,word2,words,operation,image1,image2,image3)}
-            </Modal>
+            </Modal> */}
         </div>
     )
 }
