@@ -9,10 +9,10 @@ import sys
 from models.base_models import *
 from fastapi.middleware.cors import CORSMiddleware
 import json
-from gensim.models import word2vec
+import gensim
 
 app = FastAPI(version='1.1 beta')
-model = word2vec.Word2Vec.load("./wikipedia_for_w2v.model")
+model = gensim.models.KeyedVectors.load("./chive-1.2-mc5_gensim/chive-1.2-mc5.kv")
 
 origins = [
     "http://localhost",
@@ -37,11 +37,11 @@ async def get_calced_words(Words: Words):
     word2 = Words.word2.replace("word2=","").split(",")
     operation = Words.operation.replace("operation=","")
     if operation == '+':
-        ans = model.wv.most_similar(positive=(word1 + word2),topn=5)
+        ans = model.most_similar(positive=(word1 + word2),topn=5)
     elif operation == '-':
-        ans = model.wv.most_similar(positive=word1,negative=word2,topn=5)
+        ans = model.most_similar(positive=word1,negative=word2,topn=5)
     else:
-        ans = model.wv.most_similar(positive=word1,topn=5)
+        ans = model.most_similar(positive=word1,topn=5)
     
     data = []
     for m in ans:
