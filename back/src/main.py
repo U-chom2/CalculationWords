@@ -15,14 +15,13 @@ app = FastAPI(version='1.1 beta')
 model = gensim.models.KeyedVectors.load("./chive-1.2-mc5_gensim/chive-1.2-mc5.kv")
 
 origins = [
-    # "http://localhost",
-    # "http://localhost:3000",
-    "*"
+    "http://localhost",
+    "http://localhost:3000"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    # allow_origins=origins,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
