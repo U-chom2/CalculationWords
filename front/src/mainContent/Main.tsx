@@ -16,6 +16,16 @@ const style = {
   p: 4,
 };
 
+type modalType = {
+    word1: string,
+    word2: string,
+    words: [],
+    operation: string,
+    image1: string,
+    image2: string,
+    image3: string
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     main: {
@@ -33,34 +43,45 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Main = () => {
     const classes = useStyles();
-    const [image1, setImages1] =useState('');
-    const [image2, setImages2] =useState('');
-    const [image3, setImages3] =useState('');
-    const [word1org, setWord1org] = useState('');
-    const [word2org, setWord2org] = useState('');
     const [word1, setWord1] = useState('');
     const [word2, setWord2] = useState('');
     const [words, setWords] = useState(['']);
     const [operation, setOperation] = useState('');
     const [open, setOpen] = useState(false);
+    const [modalData, setModalData] = useState<modalType>({
+        word1: '',
+        word2: '',
+        words: [],
+        operation: '',
+        image1: '',
+        image2: '',
+        image3: ''
+    });
     const handleOpen = async () => {
-        setWord1(word1org);
-        setWord2(word2org);
         const wordsAndImages = CallWords({word1:word1, word2:word2, operation:operation});
-        setWords((await wordsAndImages).words);
-        if (words.length){
-            setImages1((await wordsAndImages).illust1);
-            setImages2((await wordsAndImages).illust2);
-            setImages3((await wordsAndImages).illust3);
+        const newModalData = {
+            word1:word1,
+            word2:word2,
+            words:(await wordsAndImages).words,
+            operation:operation,
+            image1: '',
+            image2: '',
+            image3: ''
         }
+        if (words.length){
+            newModalData.image1 = (await wordsAndImages).illust1;
+            newModalData.image2 = (await wordsAndImages).illust2;
+            newModalData.image3 = (await wordsAndImages).illust3;
+        }
+        setModalData(newModalData);
         setOpen(true);
     }
     const handleClose = () => setOpen(false);
     const handleChangeWord1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setWord1org(event.target.value);
+        setWord1(event.target.value);
     };
     const handleChangeWord2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setWord2org(event.target.value);
+        setWord2(event.target.value);
     };
     const handleChangeOperation = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         setOperation(event.target.value as string);
@@ -73,7 +94,7 @@ const Main = () => {
                     <TextField 
                         label="Word1" 
                         variant="outlined" 
-                        value={word1org}
+                        value={word1}
                         onChange={handleChangeWord1}
                     />
                 </form>
@@ -98,7 +119,7 @@ const Main = () => {
                     <TextField 
                         label="Word2" 
                         variant="outlined" 
-                        value={word2org}
+                        value={word2}
                         onChange={handleChangeWord2}
                     />
                 </form>
@@ -112,7 +133,7 @@ const Main = () => {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        {SimpleModal(word1,word2,words,operation,image1,image2,image3)}
+                        {SimpleModal(modalData)}
                     </Typography>
                 </Box>
             </Modal>

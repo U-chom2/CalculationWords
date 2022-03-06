@@ -13,6 +13,16 @@ const getModalStyle = () => {
   };
 }
 
+type modalType = {
+  word1: string,
+  word2: string,
+  words: [],
+  operation: string,
+  image1: string,
+  image2: string,
+  image3: string
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -192,27 +202,27 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const SimpleModal = (word1:string,word2:string,words:string[],operation:string,image1:string,image2:string,image3:string) => {
+const SimpleModal = (modalData:modalType) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
 
-  if (!words.length){
+  if (!modalData.words.length){
     return (<div>No Words</div>);
   }
 
   else {
-    const illust1:string[] = image1.split("!@#$", 20);//こいつは上限2で出す
-    const illust2:string[] = image2.split("!@#$", 20);//こいつは上限2で出す
-    const illust3:string[] = image3.split("!@#$", 20);//こいつは0番目だけ出す
+    const illust1:string[] = modalData.image1.split("!@#$", 20);//こいつは上限2で出す
+    const illust2:string[] = modalData.image2.split("!@#$", 20);//こいつは上限2で出す
+    const illust3:string[] = modalData.image3.split("!@#$", 20);//こいつは0番目だけ出す
 
-    if (word1.length === 2){
-      return word1Length2(modalStyle,classes,word1,word2,words,operation,illust1,illust2[0],illust3[0]);
+    if (modalData.word1.length === 2){
+      return word1Length2(modalStyle,classes,modalData.word1,modalData.word2,modalData.words,modalData.operation,illust1,illust2[0],illust3[0]);
     }
-    if (word2.length === 2){
-      return word2Length2(modalStyle,classes,word1,word2,words,operation,illust1[0],illust2,illust3[0]);
+    if (modalData.word2.length === 2){
+      return word2Length2(modalStyle,classes,modalData.word1,modalData.word2,modalData.words,modalData.operation,illust1[0],illust2,illust3[0]);
     }
-    return wordOrg(modalStyle,classes,word1,word2,words,operation,illust1[0],illust2[0],illust3[0]);
+    return wordOrg(modalStyle,classes,modalData.word1,modalData.word2,modalData.words,modalData.operation,illust1[0],illust2[0],illust3[0]);
   }
 }
 
