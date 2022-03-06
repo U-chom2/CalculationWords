@@ -84,7 +84,7 @@ const wordOrg = (
 const word1Length2 = (
   modalStyle:any,
   classes:any,
-  word1:string,
+  word1:string[],
   word2:string,
   words:string[],
   operation:string,
@@ -138,7 +138,7 @@ const word2Length2 = (
   modalStyle:any,
   classes:any,
   word1:string,
-  word2:string,
+  word2:string[],
   words:string[],
   operation:string,
   illust1:string,
@@ -212,17 +212,46 @@ const SimpleModal = (modalData:modalType) => {
   }
 
   else {
+    const word1 = modalData.word1.split(",", 2);
+    const word2 = modalData.word2.split(",", 2);
     const illust1:string[] = modalData.image1.split("!@#$", 20);//こいつは上限2で出す
     const illust2:string[] = modalData.image2.split("!@#$", 20);//こいつは上限2で出す
     const illust3:string[] = modalData.image3.split("!@#$", 20);//こいつは0番目だけ出す
 
-    if (modalData.word1.length === 2){
-      return word1Length2(modalStyle,classes,modalData.word1,modalData.word2,modalData.words,modalData.operation,illust1,illust2[0],illust3[0]);
+    if (word1.length === 2){
+      return word1Length2(
+        modalStyle,
+        classes,
+        word1,
+        modalData.word2,
+        modalData.words,
+        modalData.operation,
+        illust1,
+        illust2[0],
+        illust3[0]);
     }
-    if (modalData.word2.length === 2){
-      return word2Length2(modalStyle,classes,modalData.word1,modalData.word2,modalData.words,modalData.operation,illust1[0],illust2,illust3[0]);
+    if (word2.length === 2){
+      return word2Length2(
+        modalStyle,
+        classes,
+        modalData.word1,
+        word2,
+        modalData.words,
+        modalData.operation,
+        illust1[0],
+        illust2,
+        illust3[0]);
     }
-    return wordOrg(modalStyle,classes,modalData.word1,modalData.word2,modalData.words,modalData.operation,illust1[0],illust2[0],illust3[0]);
+    return wordOrg(
+      modalStyle,
+      classes,
+      modalData.word1,
+      modalData.word2,
+      modalData.words,
+      modalData.operation,
+      illust1[0],
+      illust2[0],
+      illust3[0]);
   }
 }
 
