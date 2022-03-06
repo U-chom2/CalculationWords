@@ -19,7 +19,9 @@ const CallWords = async (props:callProps) => {
     }
     await fetch('http://localhost:8000/calc_words',{
         method: 'POST',
-        credentials: "include",
+        // mode: 'cors', // no-cors, *cors, same-origin
+        credentials: "include", // include, *same-origin, omit
+        // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         headers: {
             'Content-Type': 'application/json' // JSON形式のデータのヘッダー
         },

@@ -45,7 +45,6 @@ const Main = () => {
     const classes = useStyles();
     const [word1, setWord1] = useState('王様,女');
     const [word2, setWord2] = useState('男');
-    const [words, setWords] = useState(['']);
     const [operation, setOperation] = useState('-');
     const [open, setOpen] = useState(false);
     const [modalData, setModalData] = useState<modalType>({
@@ -68,7 +67,7 @@ const Main = () => {
             image2: '',
             image3: ''
         }
-        if (words.length){
+        if (newModalData.words.length){
             newModalData.image1 = (await wordsAndImages).illust1;
             newModalData.image2 = (await wordsAndImages).illust2;
             newModalData.image3 = (await wordsAndImages).illust3;
