@@ -196,17 +196,24 @@ const SimpleModal = (word1:string,word2:string,words:string[],operation:string,i
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const illust1:string[] = image1.split("!@#$", 20);//こいつは上限2で出す
-  const illust2:string[] = image2.split("!@#$", 20);//こいつは上限2で出す
-  const illust3:string[] = image3.split("!@#$", 20);//こいつは0番目だけ出す
 
-  if (word1.length === 2){
-    return word1Length2(modalStyle,classes,word1,word2,words,operation,illust1,illust2[0],illust3[0]);
+  if (!words.length){
+    return (<div>No Words</div>);
   }
-  if (word2.length === 2){
-    return word2Length2(modalStyle,classes,word1,word2,words,operation,illust1[0],illust2,illust3[0]);
+
+  else {
+    const illust1:string[] = image1.split("!@#$", 20);//こいつは上限2で出す
+    const illust2:string[] = image2.split("!@#$", 20);//こいつは上限2で出す
+    const illust3:string[] = image3.split("!@#$", 20);//こいつは0番目だけ出す
+
+    if (word1.length === 2){
+      return word1Length2(modalStyle,classes,word1,word2,words,operation,illust1,illust2[0],illust3[0]);
+    }
+    if (word2.length === 2){
+      return word2Length2(modalStyle,classes,word1,word2,words,operation,illust1[0],illust2,illust3[0]);
+    }
+    return wordOrg(modalStyle,classes,word1,word2,words,operation,illust1[0],illust2[0],illust3[0]);
   }
-  return wordOrg(modalStyle,classes,word1,word2,words,operation,illust1[0],illust2[0],illust3[0]);
 }
 
 export default SimpleModal;
