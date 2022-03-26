@@ -1,7 +1,30 @@
-import { Button, createStyles, FormControl, InputLabel, makeStyles, Modal, Select, TextField, Theme } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Box, Button, createStyles, FormControl, InputLabel, makeStyles, Modal, Select, TextField, Theme, Typography } from '@material-ui/core';
+import * as React from 'react';
+import { useState } from 'react';
 import CallWords from './CallWords';
-import SimpleModal from './modal';
+import SimpleModal from './Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+type modalType = {
+    word1: string,
+    word2: string,
+    words: [],
+    operation: string,
+    image1: string,
+    image2: string,
+    image3: string
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,13 +43,39 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Main = () => {
     const classes = useStyles();
-    const [images, setImages] =useState('');
-    const [word1, setWord1] = useState('');
-    const [word2, setWord2] = useState('');
-    const [words, setWords] = useState(['']);
-    const [operation, setOperation] = useState('');
+    const [word1, setWord1] = useState('王様,女');
+    const [word2, setWord2] = useState('男');
+    const [operation, setOperation] = useState('-');
     const [open, setOpen] = useState(false);
-
+    const [modalData, setModalData] = useState<modalType>({
+        word1: '',
+        word2: '',
+        words: [],
+        operation: '',
+        image1: '',
+        image2: '',
+        image3: ''
+    });
+    const handleOpen = async () => {
+        const wordsAndImages = CallWords({word1:word1, word2:word2, operation:operation});
+        const newModalData = {
+            word1:word1,
+            word2:word2,
+            words:(await wordsAndImages).words,
+            operation:operation,
+            image1: '',
+            image2: '',
+            image3: ''
+        }
+        if (newModalData.words.length){
+            newModalData.image1 = (await wordsAndImages).illust1;
+            newModalData.image2 = (await wordsAndImages).illust2;
+            newModalData.image3 = (await wordsAndImages).illust3;
+        }
+        setModalData(newModalData);
+        setOpen(true);
+    }
+    const handleClose = () => setOpen(false);
     const handleChangeWord1 = (event: React.ChangeEvent<HTMLInputElement>) => {
         setWord1(event.target.value);
     };
@@ -35,16 +84,6 @@ const Main = () => {
     };
     const handleChangeOperation = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
         setOperation(event.target.value as string);
-    };
-    const handleOpen = async () => {
-        const wordsAndImages = CallWords({word1:word1, word2:word2, operation:operation});
-        setWords((await wordsAndImages).words);
-        setImages((await wordsAndImages).illusts);
-        setOpen(true);
-    };
-  
-    const handleClose = () => {
-        setOpen(false);
     };
 
     return (
@@ -70,10 +109,9 @@ const Main = () => {
                             id: 'Operation',
                         }}
                     >
-                        <option aria-label="None" value="" />
+                        <option aria-label="None" value=" "/>
                         <option value={'+'}>+</option>
                         <option value={'-'}>-</option>
-                        <option value={' '}> </option>
                     </Select>
                 </FormControl>
                 <form noValidate autoComplete="off">
@@ -85,19 +123,21 @@ const Main = () => {
                     />
                 </form>
             </div>
-            <Button onClick={() => handleOpen() } variant="contained" color="primary">
-                検索
-            </Button>
+            <Button onClick={handleOpen} variant="contained" color="primary">計算</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-                >
-                {SimpleModal(words,images)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        {SimpleModal(modalData)}
+                    </Typography>
+                </Box>
             </Modal>
         </div>
-    )
+  );
 }
 
 export default Main;
