@@ -6,6 +6,7 @@ services:
         build: 
             context: ./back
             dockerfile: Dockerfile
+        image: uchomw2v2.azurecr.io/back:v1
         volumes:
             - ./back/src:/var/www/html
         command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
@@ -20,6 +21,7 @@ services:
         build:
             context: ./front
             dockerfile: Dockerfile
+        image: uchomw2v2.azurecr.io/front:v1
         tty: true
         environment:
             - NODE_ENV=production
