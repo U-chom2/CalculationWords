@@ -1,5 +1,5 @@
 import base64
-from illust import out
+from static.illust import out
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel  # リクエストbodyを定義するために必要
@@ -12,9 +12,9 @@ from fastapi.middleware.cors import CORSMiddleware
 import json
 import gensim
 
-app = FastAPI(version='1.1 beta')
-app.mount("/", StaticFiles(directory="static"), name="static")
-model = gensim.models.KeyedVectors.load("./chive-1.2-mc5_gensim/chive-1.2-mc5.kv")
+app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+model = gensim.models.KeyedVectors.load("/models/chive-1.2-mc5_gensim/chive-1.2-mc5.kv")
 print("Backend is ready.")
 
 
