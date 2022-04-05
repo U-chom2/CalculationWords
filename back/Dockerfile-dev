@@ -6,11 +6,11 @@ RUN pip install --upgrade pip fastapi uvicorn aiofiles gensim requests beautiful
 
 COPY ./src /app/
 
-WORKDIR /app/models
-RUN wget https://sudachi.s3-ap-northeast-1.amazonaws.com/chive/chive-1.2-mc5_gensim.tar.gz && \
-    tar -zxvf chive-1.2-mc5_gensim.tar.gz && \
-    rm chive-1.2-mc5_gensim.tar.gz
+# WORKDIR /app/models
+RUN wget -P /app/models https://sudachi.s3-ap-northeast-1.amazonaws.com/chive/chive-1.2-mc5_gensim.tar.gz && \
+    tar -zxvf /app/models/chive-1.2-mc5_gensim.tar.gz && \
+    rm /app/models/chive-1.2-mc5_gensim.tar.gz
 
 WORKDIR /app
 EXPOSE 8000
-ENTRYPOINT [ "uvicorn","static.main:app","--reload","--host","0.0.0.0","--port","8000" ]
+# ENTRYPOINT [ "uvicorn","main:app","--reload","--host","0.0.0.0","--port","8000" ]

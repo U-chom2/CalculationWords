@@ -1,7 +1,7 @@
 #!/bin/bash
 ACR_NAME=okumurareg
 IMG_NAME=testapp
-TAG=0.0.1
+TAG=0.0.2
 
 docker build -t ${ACR_NAME}.azurecr.io/${IMG_NAME}:${TAG} \
     -f ./Dockerfile-dev \

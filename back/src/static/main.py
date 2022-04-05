@@ -1,5 +1,5 @@
 import base64
-from static.illust import out
+import static.illust as illust
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel  # リクエストbodyを定義するために必要
@@ -14,7 +14,7 @@ import gensim
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
-model = gensim.models.KeyedVectors.load("/models/chive-1.2-mc5_gensim/chive-1.2-mc5.kv")
+model = gensim.models.KeyedVectors.load("/chive-1.2-mc5_gensim/chive-1.2-mc5.kv")
 print("Backend is ready.")
 
 
@@ -60,20 +60,20 @@ async def get_calced_words(Words: Words):
     # Word1のイラスト
     if len(word1) != 0:
         for m in word1:
-            illust1.append(out(m))
+            illust1.append(illust.out(m))
     illust_1 = '!@#$'.join(map(str,illust1))
     illust2 = []
     # Word2のイラスト
     if len(word2) != 0:
         for m in word2:
-            illust2.append(out(m))
+            illust2.append(illust.out(m))
     illust_2 = '!@#$'.join(map(str,illust2))
     illust_res = []
     # 結果のイラスト
     if len(ans) != 0:
         for m in ans:
             print(m[0])
-            illust_res.append(out(m[0]))
+            illust_res.append(illust.out(m[0]))
     illust_3 = '!@#$'.join(map(str,illust_res))
 
     data_all = { 'words': data, 'illust1': illust_1, 'illust2': illust_2, 'illust3': illust_3}
